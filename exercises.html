@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios - Metacognición Aplicada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --light: #ECF0F1;
+            --gray: #BDC3C7;
+            --dark-gray: #95A5A6;
+            --background: #FAFAFA;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            background-color: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(44, 62, 80, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .exercises-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .exercises-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .exercises-header p {
+            color: var(--dark-gray);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Exercise Categories */
+        .exercise-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .category-info h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .category-info .level {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .category-description {
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .btn-primary {
+            background-color: var(--success);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        /* Exercise Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            color: var(--dark-gray);
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--primary);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header p {
+            color: var(--dark-gray);
+        }
+
+        /* Memory Exercise */
+        .memory-exercise {
+            text-align: center;
+        }
+
+        .sequence-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 2rem 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light);
+            border-radius: 15px;
+        }
+
+        .number-input {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .number-input input {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 2px solid var(--light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .number-input input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .exercise-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--light);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--gray);
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--white);
+        }
+
+        .btn-warning:hover {
+            background-color: #E67E22;
+            transform: translateY(-2px);
+        }
+
+        /* Attention Exercise */
+        .attention-exercise {
+            text-align: center;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 15px;
+        }
+
+        .grid-item {
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .grid-item:hover {
+            transform: scale(1.1);
+            border-color: var(--secondary);
+        }
+
+        .grid-item.target {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .grid-item.wrong {
+            background: #E74C3C;
+            color: var(--white);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .timer {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--warning);
+            margin: 1rem 0;
+        }
+
+        .score {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--success);
+            margin: 1rem 0;
+        }
+
+        /* Stress Exercise */
+        .stress-exercise {
+            text-align: center;
+        }
+
+        .breathing-circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .breathing-circle.inhale {
+            transform: scale(1.3);
+        }
+
+        .breathing-circle.exhale {
+            transform: scale(0.8);
+        }
+
+        .breathing-instructions {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin: 1rem 0;
+            font-weight: 600;
+        }
+
+        .breathing-count {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 1rem 0;
+        }
+
+        /* Results */
+        .results {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light);
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .results h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .results p {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .results .score-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--success);
+            margin: 1rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .exercise-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .sequence-display {
+                font-size: 2rem;
+            }
+
+            .number-input {
+                gap: 0.5rem;
+            }
+
+            .number-input input {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .grid-container {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 300px;
+            }
+
+            .grid-item {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .breathing-circle {
+                width: 150px;
+                height: 150px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Metacognición</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="exercises.html" class="active">Ejercicios</a></li>
+                <li><a href="community.html">Comunidad</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-avatar">JD</div>
+                <a href="#" class="cta-button" onclick="showComingSoon()">Perfil</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Exercises Header -->
+            <div class="exercises-header fade-in-up">
+                <h1>Ejercicios Interactivos</h1>
+                <p>Elige un área de entrenamiento y comienza a mejorar tus habilidades cognitivas de forma interactiva</p>
+            </div>
+
+            <!-- Exercise Categories -->
+            <div class="exercise-categories">
+                <div class="category-card fade-in-up" onclick="openExercise('memory')">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="category-info">
+                            <h3>Entrenamiento de Memoria</h3>
+                            <div class="level">Nivel 12 - Avanzado</div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        Ejercicios de memoria a corto plazo, técnicas de asociación y sistema de recordatorios espaciados.
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat">
+                            <span class="stat-value">127</span>
+                            <span class="stat-label">Completados</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">89%</span>
+                            <span class="stat-label">Precisión</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">15</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary">Comenzar Ejercicio</button>
+                </div>
+
+                <div class="category-card fade-in-up" onclick="openExercise('attention')">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="category-info">
+                            <h3>Entrenamiento de Atención</h3>
+                            <div class="level">Nivel 8 - Intermedio</div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        Juegos de concentración, ejercicios de mindfulness y técnicas para manejar distracciones.
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat">
+                            <span class="stat-value">89</span>
+                            <span class="stat-label">Completados</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">76%</span>
+                            <span class="stat-label">Precisión</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">20</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary">Comenzar Ejercicio</button>
+                </div>
+
+                <div class="category-card fade-in-up" onclick="openExercise('stress')">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="category-info">
+                            <h3>Manejo del Estrés</h3>
+                            <div class="level">Nivel 15 - Experto</div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        Técnicas de relajación, resolución de problemas y gestión emocional para mantener la calma.
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat">
+                            <span class="stat-value">156</span>
+                            <span class="stat-label">Completados</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">92%</span>
+                            <span class="stat-label">Efectividad</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">25</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary">Comenzar Ejercicio</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Exercise Modal -->
+    <div id="exerciseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle">Ejercicio</h2>
+                <p id="modalDescription">Descripción del ejercicio</p>
+            </div>
+            <div id="exerciseContent">
+                <!-- Exercise content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Coming soon popup
+        function showComingSoon() {
+            alert('🚀 ¡Próximamente! Esta función estará disponible muy pronto. Gracias por tu interés en Metacognición Aplicada.');
+        }
+
+        // Exercise data
+        const exercises = {
+            memory: {
+                title: "Ejercicio de Memoria - Secuencia Numérica",
+                description: "Memoriza la secuencia de números y repítela en el orden correcto",
+                content: createMemoryExercise()
+            },
+            attention: {
+                title: "Ejercicio de Atención - Búsqueda Visual",
+                description: "Encuentra todos los objetivos en el grid antes de que se acabe el tiempo",
+                content: createAttentionExercise()
+            },
+            stress: {
+                title: "Ejercicio de Relajación - Respiración 4-7-8",
+                description: "Sigue la técnica de respiración para reducir el estrés",
+                content: createStressExercise()
+            }
+        };
+
+        // Open exercise modal
+        function openExercise(type) {
+            const modal = document.getElementById('exerciseModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const exerciseContent = document.getElementById('exerciseContent');
+
+            modalTitle.textContent = exercises[type].title;
+            modalDescription.textContent = exercises[type].description;
+            exerciseContent.innerHTML = exercises[type].content;
+
+            modal.style.display = 'block';
+
+            // Initialize exercise based on type
+            if (type === 'memory') {
+                initMemoryExercise();
+            } else if (type === 'attention') {
+                initAttentionExercise();
+            } else if (type === 'stress') {
+                initStressExercise();
+            }
+        }
+
+        // Close modal
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('exerciseModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('exerciseModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Create memory exercise HTML
+        function createMemoryExercise() {
+            return `
+                <div class="memory-exercise">
+                    <div class="sequence-display" id="sequenceDisplay">Presiona "Mostrar Secuencia" para comenzar</div>
+                    <div class="number-input" id="numberInput" style="display: none;">
+                        <input type="number" maxlength="1" data-index="0">
+                        <input type="number" maxlength="1" data-index="1">
+                        <input type="number" maxlength="1" data-index="2">
+                        <input type="number" maxlength="1" data-index="3">
+                        <input type="number" maxlength="1" data-index="4">
+                    </div>
+                    <div class="exercise-controls">
+                        <button class="btn btn-warning" id="showSequence">Mostrar Secuencia</button>
+                        <button class="btn btn-success" id="checkAnswer" style="display: none;">Verificar</button>
+                        <button class="btn btn-secondary" id="nextLevel" style="display: none;">Siguiente Nivel</button>
+                        <button class="btn btn-secondary" id="restartExercise">Reiniciar</button>
+                    </div>
+                    <div id="memoryResults" class="results" style="display: none;"></div>
+                </div>
+            `;
+        }
+
+        // Initialize memory exercise
+        function initMemoryExercise() {
+            let currentSequence = [];
+            let currentLevel = 1;
+            let score = 0;
+
+            const sequenceDisplay = document.getElementById('sequenceDisplay');
+            const numberInput = document.getElementById('numberInput');
+            const showSequenceBtn = document.getElementById('showSequence');
+            const checkAnswerBtn = document.getElementById('checkAnswer');
+            const nextLevelBtn = document.getElementById('nextLevel');
+            const restartBtn = document.getElementById('restartExercise');
+            const resultsDiv = document.getElementById('memoryResults');
+
+            function generateSequence(length) {
+                return Array.from({length}, () => Math.floor(Math.random() * 10));
+            }
+
+            function displaySequence(sequence) {
+                sequenceDisplay.textContent = sequence.join(' ');
+                setTimeout(() => {
+                    sequenceDisplay.textContent = '¿Cuál era la secuencia?';
+                    numberInput.style.display = 'flex';
+                    checkAnswerBtn.style.display = 'inline-block';
+                    showSequenceBtn.style.display = 'none';
+                }, 2000 + (sequence.length * 500));
+            }
+
+            showSequenceBtn.onclick = function() {
+                currentSequence = generateSequence(3 + currentLevel);
+                displaySequence(currentSequence);
+                showSequenceBtn.style.display = 'none';
+            };
+
+            checkAnswerBtn.onclick = function() {
+                const inputs = numberInput.querySelectorAll('input');
+                const userAnswer = Array.from(inputs).map(input => parseInt(input.value) || 0);
+                
+                const correct = JSON.stringify(userAnswer) === JSON.stringify(currentSequence);
+                
+                if (correct) {
+                    score += 10 * currentLevel;
+                    resultsDiv.innerHTML = `
+                        <h3>¡Correcto! 🎉</h3>
+                        <div class="score-display">+${10 * currentLevel} XP</div>
+                        <p>Has memorizado correctamente la secuencia</p>
+                    `;
+                    nextLevelBtn.style.display = 'inline-block';
+                    checkAnswerBtn.style.display = 'none';
+                } else {
+                    resultsDiv.innerHTML = `
+                        <h3>Intenta de nuevo</h3>
+                        <p>La secuencia correcta era: ${currentSequence.join(' ')}</p>
+                        <p>Tu respuesta: ${userAnswer.join(' ')}</p>
+                    `;
+                    showSequenceBtn.style.display = 'inline-block';
+                    showSequenceBtn.textContent = 'Intentar de nuevo';
+                    checkAnswerBtn.style.display = 'none';
+                }
+                resultsDiv.style.display = 'block';
+            };
+
+            nextLevelBtn.onclick = function() {
+                currentLevel++;
+                currentSequence = [];
+                score += 5;
+                sequenceDisplay.textContent = `Nivel ${currentLevel} - Presiona "Mostrar Secuencia"`;
+                numberInput.style.display = 'none';
+                checkAnswerBtn.style.display = 'none';
+                nextLevelBtn.style.display = 'none';
+                showSequenceBtn.style.display = 'inline-block';
+                showSequenceBtn.textContent = 'Mostrar Secuencia';
+                resultsDiv.style.display = 'none';
+                
+                // Clear inputs
+                numberInput.querySelectorAll('input').forEach(input => input.value = '');
+            };
+
+            restartBtn.onclick = function() {
+                currentLevel = 1;
+                score = 0;
+                currentSequence = [];
+                sequenceDisplay.textContent = 'Presiona "Mostrar Secuencia" para comenzar';
+                numberInput.style.display = 'none';
+                checkAnswerBtn.style.display = 'none';
+                nextLevelBtn.style.display = 'none';
+                showSequenceBtn.style.display = 'inline-block';
+                showSequenceBtn.textContent = 'Mostrar Secuencia';
+                resultsDiv.style.display = 'none';
+                
+                // Clear inputs
+                numberInput.querySelectorAll('input').forEach(input => input.value = '');
+            };
+        }
+
+        // Create attention exercise HTML
+        function createAttentionExercise() {
+            return `
+                <div class="attention-exercise">
+                    <div class="timer" id="timer">30</div>
+                    <div class="score" id="score">Puntos: 0</div>
+                    <div class="grid-container" id="gridContainer"></div>
+                    <div class="exercise-controls">
+                        <button class="btn btn-warning" id="startAttention">Iniciar Juego</button>
+                        <button class="btn btn-secondary" id="restartAttention">Reiniciar</button>
+                    </div>
+                    <div id="attentionResults" class="results" style="display: none;"></div>
+                </div>
+            `;
+        }
+
+        // Initialize attention exercise
+        function initAttentionExercise() {
+            let score = 0;
+            let timeLeft = 30;
+            let gameActive = false;
+            let timer;
+
+            const timerDisplay = document.getElementById('timer');
+            const scoreDisplay = document.getElementById('score');
+            const gridContainer = document.getElementById('gridContainer');
+            const startBtn = document.getElementById('startAttention');
+            const restartBtn = document.getElementById('restartAttention');
+            const resultsDiv = document.getElementById('attentionResults');
+
+            function createGrid() {
+                gridContainer.innerHTML = '';
+                const targetCount = Math.floor(Math.random() * 3) + 3; // 3-5 targets
+                
+                for (let i = 0; i < 24; i++) {
+                    const item = document.createElement('div');
+                    item.className = 'grid-item';
+                    item.textContent = Math.floor(Math.random() * 10);
+                    
+                    if (i < targetCount) {
+                        item.classList.add('target');
+                        item.dataset.target = 'true';
+                    }
+                    
+                    item.onclick = function() {
+                        if (!gameActive) return;
+                        
+                        if (item.dataset.target === 'true') {
+                            score += 10;
+                            item.style.backgroundColor = 'var(--success)';
+                            item.style.color = 'var(--white)';
+                            item.onclick = null;
+                        } else {
+                            item.classList.add('wrong');
+                            setTimeout(() => item.classList.remove('wrong'), 500);
+                            score -= 5;
+                        }
+                        
+                        scoreDisplay.textContent = `Puntos: ${score}`;
+                        
+                        // Check if all targets found
+                        const remainingTargets = gridContainer.querySelectorAll('.target');
+                        if (remainingTargets.length === 0) {
+                            endGame(true);
+                        }
+                    };
+                    
+                    gridContainer.appendChild(item);
+                }
+            }
+
+            function startGame() {
+                score = 0;
+                timeLeft = 30;
+                gameActive = true;
+                scoreDisplay.textContent = `Puntos: ${score}`;
+                timerDisplay.textContent = timeLeft;
+                startBtn.style.display = 'none';
+                resultsDiv.style.display = 'none';
+                
+                createGrid();
+                
+                timer = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = timeLeft;
+                    
+                    if (timeLeft <= 0) {
+                        endGame(false);
+                    }
+                }, 1000);
+            }
+
+            function endGame(allTargetsFound) {
+                gameActive = false;
+                clearInterval(timer);
+                
+                let message = '';
+                if (allTargetsFound) {
+                    message = `¡Excelente! Encontraste todos los objetivos con ${timeLeft} segundos restantes`;
+                    score += timeLeft * 2; // Bonus for time remaining
+                } else {
+                    message = `Tiempo agotado. Puntuación final: ${score}`;
+                }
+                
+                resultsDiv.innerHTML = `
+                    <h3>Juego Terminado</h3>
+                    <div class="score-display">${score} XP</div>
+                    <p>${message}</p>
+                `;
+                resultsDiv.style.display = 'block';
+                startBtn.style.display = 'inline-block';
+            }
+
+            startBtn.onclick = startGame;
+            restartBtn.onclick = function() {
+                clearInterval(timer);
+                score = 0;
+                timeLeft = 30;
+                gameActive = false;
+                scoreDisplay.textContent = `Puntos: ${score}`;
+                timerDisplay.textContent = timeLeft;
+                startBtn.style.display = 'inline-block';
+                resultsDiv.style.display = 'none';
+                gridContainer.innerHTML = '';
+            };
+        }
+
+        // Create stress exercise HTML
+        function createStressExercise() {
+            return `
+                <div class="stress-exercise">
+                    <div class="breathing-circle" id="breathingCircle">
+                        Respira
+                    </div>
+                    <div class="breathing-instructions" id="instructions">Preparate para comenzar</div>
+                    <div class="breathing-count" id="count">0</div>
+                    <div class="exercise-controls">
+                        <button class="btn btn-success" id="startBreathing">Iniciar Respiración</button>
+                        <button class="btn btn-secondary" id="stopBreathing">Detener</button>
+                    </div>
+                    <div id="stressResults" class="results" style="display: none;"></div>
+                </div>
+            `;
+        }
+
+        // Initialize stress exercise
+        function initStressExercise() {
+            let breathingActive = false;
+            let currentCycle = 0;
+            let totalCycles = 0;
+
+            const breathingCircle = document.getElementById('breathingCircle');
+            const instructions = document.getElementById('instructions');
+            const countDisplay = document.getElementById('count');
+            const startBtn = document.getElementById('startBreathing');
+            const stopBtn = document.getElementById('stopBreathing');
+            const resultsDiv = document.getElementById('stressResults');
+
+            function startBreathingCycle() {
+                if (breathingActive) return;
+                
+                breathingActive = true;
+                currentCycle = 0;
+                totalCycles = 0;
+                
+                function breathingStep() {
+                    if (!breathingActive) return;
+                    
+                    // Inhale (4 seconds)
+                    breathingCircle.textContent = 'Inhala';
+                    breathingCircle.className = 'breathing-circle inhale';
+                    instructions.textContent = 'Inhala profundamente por la nariz';
+                    
+                    let count = 4;
+                    countDisplay.textContent = count;
+                    
+                    const inhaleInterval = setInterval(() => {
+                        count--;
+                        countDisplay.textContent = count;
+                        
+                        if (count <= 0) {
+                            clearInterval(inhaleInterval);
+                            
+                            // Hold (7 seconds)
+                            breathingCircle.textContent = 'Mantén';
+                            breathingCircle.className = 'breathing-circle';
+                            instructions.textContent = 'Mantén el aire por 7 segundos';
+                            
+                            let holdCount = 7;
+                            countDisplay.textContent = holdCount;
+                            
+                            const holdInterval = setInterval(() => {
+                                holdCount--;
+                                countDisplay.textContent = holdCount;
+                                
+                                if (holdCount <= 0) {
+                                    clearInterval(holdInterval);
+                                    
+                                    // Exhale (8 seconds)
+                                    breathingCircle.textContent = 'Exhala';
+                                    breathingCircle.className = 'breathing-circle exhale';
+                                    instructions.textContent = 'Exhala lentamente por la boca';
+                                    
+                                    let exhaleCount = 8;
+                                    countDisplay.textContent = exhaleCount;
+                                    
+                                    const exhaleInterval = setInterval(() => {
+                                        exhaleCount--;
+                                        countDisplay.textContent = exhaleCount;
+                                        
+                                        if (exhaleCount <= 0) {
+                                            clearInterval(exhaleInterval);
+                                            currentCycle++;
+                                            totalCycles++;
+                                            
+                                            if (currentCycle < 4) {
+                                                // Rest between cycles
+                                                setTimeout(breathingStep, 1000);
+                                            } else {
+                                                endBreathingSession();
+                                            }
+                                        }
+                                    }, 1000);
+                                }
+                            }, 1000);
+                        }
+                    }, 1000);
+                }
+                
+                breathingStep();
+            }
+
+            function endBreathingSession() {
+                breathingActive = false;
+                breathingCircle.textContent = 'Completado';
+                breathingCircle.className = 'breathing-circle';
+                instructions.textContent = 'Sesión de respiración completada';
+                countDisplay.textContent = totalCycles;
+                
+                resultsDiv.innerHTML = `
+                    <h3>¡Bien Hecho! 🧘</h3>
+                    <div class="score-display">${totalCycles * 5} XP</div>
+                    <p>Has completado ${totalCycles} ciclos de respiración 4-7-8</p>
+                    <p>Tu nivel de estrés debería haber disminuido significativamente</p>
+                `;
+                resultsDiv.style.display = 'block';
+                
+                startBtn.style.display = 'inline-block';
+                startBtn.textContent = 'Repetir Ejercicio';
+            }
+
+            startBtn.onclick = function() {
+                startBreathingCycle();
+                startBtn.style.display = 'none';
+                resultsDiv.style.display = 'none';
+            };
+
+            stopBtn.onclick = function() {
+                breathingActive = false;
+                breathingCircle.textContent = 'Respiración';
+                breathingCircle.className = 'breathing-circle';
+                instructions.textContent = 'Sesión detenida';
+                countDisplay.textContent = '0';
+                startBtn.style.display = 'inline-block';
+                startBtn.textContent = 'Iniciar Respiración';
+                resultsDiv.style.display = 'none';
+            };
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(44, 62, 80, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

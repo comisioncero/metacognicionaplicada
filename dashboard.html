@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Metacognición Aplicada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --light: #ECF0F1;
+            --gray: #BDC3C7;
+            --dark-gray: #95A5A6;
+            --background: #FAFAFA;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            background-color: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(44, 62, 80, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .dashboard-header {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text p {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+        }
+
+        .streak-counter {
+            text-align: center;
+            background: linear-gradient(135deg, var(--warning), #E67E22);
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            min-width: 150px;
+        }
+
+        .streak-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .streak-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Progress Overview */
+        .progress-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .progress-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .progress-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .progress-circle {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1rem;
+            position: relative;
+        }
+
+        .progress-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle circle {
+            fill: none;
+            stroke-width: 8;
+        }
+
+        .progress-bg {
+            stroke: var(--light);
+        }
+
+        .progress-fill {
+            stroke: var(--secondary);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .progress-percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .progress-card p {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Training Areas */
+        .training-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .area-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .area-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .area-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .area-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .area-info h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .area-info .level {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .area-description {
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .area-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .area-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--success);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--secondary);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--secondary);
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Recent Activity */
+        .recent-activity {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--secondary);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .activity-score {
+            text-align: right;
+        }
+
+        .score-positive {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        /* Achievements */
+        .achievements {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .badge {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .badge.unlocked {
+            background: linear-gradient(135deg, var(--warning), #E67E22);
+            color: var(--white);
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+        }
+
+        .badge-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .welcome-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .streak-counter {
+                margin-top: 1rem;
+            }
+
+            .progress-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .training-areas {
+                grid-template-columns: 1fr;
+            }
+
+            .area-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Metacognición</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="community.html">Comunidad</a></li>
+                <li><a href="#" onclick="showComingSoon()">Perfil</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-avatar">JD</div>
+                <a href="#" class="cta-button" onclick="showComingSoon()">Configuración</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header fade-in-up">
+                <div class="welcome-section">
+                    <div class="welcome-text">
+                        <h1>¡Hola, Juan!</h1>
+                        <p>Continúa con tu entrenamiento cognitivo. ¡Tu progreso es excelente!</p>
+                    </div>
+                    <div class="streak-counter">
+                        <span class="streak-number">7</span>
+                        <span class="streak-label">Días Seguidos</span>
+                    </div>
+                </div>
+
+                <!-- Progress Overview -->
+                <div class="progress-overview">
+                    <div class="progress-card">
+                        <div class="progress-circle">
+                            <svg>
+                                <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-fill" cx="50" cy="50" r="45" 
+                                        stroke-dasharray="283" stroke-dashoffset="71"></circle>
+                            </svg>
+                            <div class="progress-percentage">75%</div>
+                        </div>
+                        <h3>Memoria</h3>
+                        <p>Nivel 12 - Avanzado</p>
+                    </div>
+
+                    <div class="progress-card">
+                        <div class="progress-circle">
+                            <svg>
+                                <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-fill" cx="50" cy="50" r="45" 
+                                        stroke-dasharray="283" stroke-dashoffset="113"></circle>
+                            </svg>
+                            <div class="progress-percentage">60%</div>
+                        </div>
+                        <h3>Atención</h3>
+                        <p>Nivel 8 - Intermedio</p>
+                    </div>
+
+                    <div class="progress-card">
+                        <div class="progress-circle">
+                            <svg>
+                                <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-fill" cx="50" cy="50" r="45" 
+                                        stroke-dasharray="283" stroke-dashoffset="42"></circle>
+                            </svg>
+                            <div class="progress-percentage">85%</div>
+                        </div>
+                        <h3>Manejo del Estrés</h3>
+                        <p>Nivel 15 - Experto</p>
+                    </div>
+
+                    <div class="progress-card">
+                        <div class="progress-circle">
+                            <svg>
+                                <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-fill" cx="50" cy="50" r="45" 
+                                        stroke-dasharray="283" stroke-dashoffset="85"></circle>
+                            </svg>
+                            <div class="progress-percentage">70%</div>
+                        </div>
+                        <h3>Aprendizaje</h3>
+                        <p>Nivel 10 - Intermedio</p>
+                    </div>
+
+                    <div class="progress-card">
+                        <div class="progress-circle">
+                            <svg>
+                                <circle class="progress-bg" cx="50" cy="50" r="45"></circle>
+                                <circle class="progress-fill" cx="50" cy="50" r="45" 
+                                        stroke-dasharray="283" stroke-dashoffset="155"></circle>
+                            </svg>
+                            <div class="progress-percentage">45%</div>
+                        </div>
+                        <h3>Hábitos</h3>
+                        <p>Nivel 6 - Principiante</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Areas -->
+            <div class="training-areas">
+                <div class="area-card fade-in-up" onclick="window.location.href='exercises-functional.html'">
+                    <div class="area-header">
+                        <div class="area-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="area-info">
+                            <h3>Memoria de Trabajo - Dual N-Back</h3>
+                            <div class="level">Nivel Científico</div>
+                        </div>
+                    </div>
+                    <div class="area-description">
+                        Entrenamiento Dual N-Back: el único método científicamente probado para aumentar la inteligencia fluida. Basado en investigaciones de Jaeggi et al. que demostraron mejoras de 5-20 puntos de IQ.
+                    </div>
+                    <div class="area-stats">
+                        <div class="stat">
+                            <span class="stat-value">127</span>
+                            <span class="stat-label">Ejercicios</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">89%</span>
+                            <span class="stat-label">Precisión</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">15</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="#" class="btn-primary" onclick="event.stopPropagation(); startTraining('memory')">Entrenar Ahora</a>
+                        <a href="#" class="btn-secondary" onclick="event.stopPropagation(); showProgress('memory')">Ver Progreso</a>
+                    </div>
+                </div>
+
+                <div class="area-card fade-in-up" onclick="window.location.href='exercises-functional.html'">
+                    <div class="area-header">
+                        <div class="area-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="area-info">
+                            <h3>Atención Selectiva - Test de Stroop</h3>
+                            <div class="level">Neuropsicológico</div>
+                        </div>
+                    </div>
+                    <div class="area-description">
+                        Test de Stroop para evaluar inhibición cognitiva y control ejecutivo. Basado en neuroimagen que activa corteza prefrontal y cíngulo anterior. Mejora la capacidad de ignorar distracciones.
+                    </div>
+                    <div class="area-stats">
+                        <div class="stat">
+                            <span class="stat-value">89</span>
+                            <span class="stat-label">Ejercicios</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">76%</span>
+                            <span class="stat-label">Precisión</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">20</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="#" class="btn-primary" onclick="event.stopPropagation(); startTraining('attention')">Entrenar Ahora</a>
+                        <a href="#" class="btn-secondary" onclick="event.stopPropagation(); showProgress('attention')">Ver Progreso</a>
+                    </div>
+                </div>
+
+                <div class="area-card fade-in-up" onclick="window.location.href='exercises-functional.html'">
+                    <div class="area-header">
+                        <div class="area-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="area-info">
+                            <h3>Manejo del Estrés - Respiración 4-7-8</h3>
+                            <div class="level">Clínicamente Validado</div>
+                        </div>
+                    </div>
+                    <div class="area-description">
+                        Técnica 4-7-8 del Dr. Andrew Weil, validada clínicamente. Reduce PA (-9 mmHg), mejora HRV y activa el nervio vago. Estudios en Journal of American Heart Association.
+                    </div>
+                    <div class="area-stats">
+                        <div class="stat">
+                            <span class="stat-value">156</span>
+                            <span class="stat-label">Ejercicios</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">92%</span>
+                            <span class="stat-label">Efectividad</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">25</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="#" class="btn-primary" onclick="event.stopPropagation(); startTraining('stress')">Entrenar Ahora</a>
+                        <a href="#" class="btn-secondary" onclick="event.stopPropagation(); showProgress('stress')">Ver Progreso</a>
+                    </div>
+                </div>
+
+                <div class="area-card fade-in-up" onclick="startTraining('learning')">
+                    <div class="area-header">
+                        <div class="area-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="area-info">
+                            <h3>Supervisión del Aprendizaje</h3>
+                            <div class="level">Nivel 10 - Intermedio</div>
+                        </div>
+                    </div>
+                    <div class="area-description">
+                        Evalúa tu progreso, establece metas SMART y recibe feedback personalizado sobre tu desarrollo.
+                    </div>
+                    <div class="area-stats">
+                        <div class="stat">
+                            <span class="stat-value">45</span>
+                            <span class="stat-label">Evaluaciones</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">8</span>
+                            <span class="stat-label">Metas Cumplidas</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">10</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="#" class="btn-primary" onclick="event.stopPropagation(); startTraining('learning')">Evaluar Ahora</a>
+                        <a href="#" class="btn-secondary" onclick="event.stopPropagation(); showProgress('learning')">Ver Metas</a>
+                    </div>
+                </div>
+
+                <div class="area-card fade-in-up" onclick="startTraining('habits')">
+                    <div class="area-header">
+                        <div class="area-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <div class="area-info">
+                            <h3>Entrenamiento de Hábitos</h3>
+                            <div class="level">Nivel 6 - Principiante</div>
+                        </div>
+                    </div>
+                    <div class="area-description">
+                        Establece nuevos hábitos, recibe recordatorios inteligentes y mantén la constancia con técnicas de refuerzo.
+                    </div>
+                    <div class="area-stats">
+                        <div class="stat">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">Hábitos Activos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">85%</span>
+                            <span class="stat-label">Consistencia</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">5</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <div class="area-actions">
+                        <a href="#" class="btn-primary" onclick="event.stopPropagation(); startTraining('habits')">Gestionar Hábitos</a>
+                        <a href="#" class="btn-secondary" onclick="event.stopPropagation(); showProgress('habits')">Ver Estadísticas</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity fade-in-up">
+                <h2 class="section-title">Actividad Reciente</h2>
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Secuencia Numérica - Nivel 12</div>
+                            <div class="activity-time">Hace 2 horas</div>
+                        </div>
+                        <div class="activity-score">
+                            <span class="score-positive">+25 XP</span>
+                        </div>
+                    </li>
+                    
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Técnica 4-7-8 de Respiración</div>
+                            <div class="activity-time">Hace 5 horas</div>
+                        </div>
+                        <div class="activity-score">
+                            <span class="score-positive">+15 XP</span>
+                        </div>
+                    </li>
+                    
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">Ejercicio de Concentración Visual</div>
+                            <div class="activity-time">Ayer</div>
+                        </div>
+                        <div class="activity-score">
+                            <span class="score-positive">+30 XP</span>
+                        </div>
+                    </li>
+                    
+                    <li class="activity-item">
+                        <div class="activity-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">¡Logro Desbloqueado! Memory Master</div>
+                            <div class="activity-time">Ayer</div>
+                        </div>
+                        <div class="activity-score">
+                            <span class="score-positive">+100 XP</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Achievements -->
+            <div class="achievements fade-in-up">
+                <h2 class="section-title">Logros Recientes</h2>
+                <div class="badges-grid">
+                    <div class="badge unlocked">
+                        <div class="badge-icon">🏆</div>
+                        <div class="badge-name">Memory Master</div>
+                    </div>
+                    <div class="badge unlocked">
+                        <div class="badge-icon">🧘</div>
+                        <div class="badge-name">Zen Master</div>
+                    </div>
+                    <div class="badge unlocked">
+                        <div class="badge-icon">🎯</div>
+                        <div class="badge-name">Focus Champion</div>
+                    </div>
+                    <div class="badge unlocked">
+                        <div class="badge-icon">🔥</div>
+                        <div class="badge-name">7-Day Streak</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">⚡</div>
+                        <div class="badge-name">Speed Demon</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">🧩</div>
+                        <div class="badge-name">Problem Solver</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">📚</div>
+                        <div class="badge-name">Learning Legend</div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">🤝</div>
+                        <div class="badge-name">Team Player</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Coming soon popup
+        function showComingSoon() {
+            alert('🚀 ¡Próximamente! Esta función estará disponible muy pronto. Gracias por tu interés en Metacognición Aplicada.');
+        }
+
+        // Start training function
+        function startTraining(area) {
+            const areas = {
+                'memory': 'Entrenamiento de Memoria',
+                'attention': 'Entrenamiento de Atención',
+                'stress': 'Manejo del Estrés',
+                'learning': 'Supervisión del Aprendizaje',
+                'habits': 'Entrenamiento de Hábitos'
+            };
+            
+            alert(`🧠 Iniciando ${areas[area]}...\n\nEsta función estará disponible próximamente. Por ahora, puedes explorar el dashboard y ver tu progreso.`);
+        }
+
+        // Show progress function
+        function showProgress(area) {
+            const areas = {
+                'memory': 'Memoria',
+                'attention': 'Atención',
+                'stress': 'Manejo del Estrés',
+                'learning': 'Aprendizaje',
+                'habits': 'Hábitos'
+            };
+            
+            alert(`📊 Mostrando progreso de ${areas[area]}...\n\nEsta función estará disponible próximamente. Por ahora, puedes ver tu progreso en las tarjetas del dashboard.`);
+        }
+
+        // Animate progress circles on load
+        window.addEventListener('load', () => {
+            const progressCircles = document.querySelectorAll('.progress-fill');
+            progressCircles.forEach((circle, index) => {
+                setTimeout(() => {
+                    circle.style.strokeDashoffset = circle.getAttribute('stroke-dashoffset');
+                }, index * 200);
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(44, 62, 80, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

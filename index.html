@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metacognición Aplicada - Plataforma SaaS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --light: #ECF0F1;
+            --gray: #BDC3C7;
+            --dark-gray: #95A5A6;
+            --background: #FAFAFA;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            background-color: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(44, 62, 80, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .cta-button {
+            background-color: var(--success);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('hero-brain.png') center/cover no-repeat;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background-color: var(--success);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #229954;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            padding: 1rem 2rem;
+            border: 2px solid var(--white);
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--light);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        /* Dashboard Preview */
+        .dashboard-preview {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--light) 0%, var(--white) 100%);
+        }
+
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .dashboard-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-text p {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .dashboard-image {
+            text-align: center;
+        }
+
+        .dashboard-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Gamification Section */
+        .gamification {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .badges-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .badge-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .badge-item:hover {
+            transform: scale(1.05);
+            background: var(--white);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--warning), #E67E22);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        /* Community Section */
+        .community {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+        }
+
+        .community-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .community h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .community-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--success);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: var(--success);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            margin-top: 2rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .dashboard-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">Metacognición</a>
+            <ul class="nav-links">
+                <li><a href="#features">Características</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#community">Comunidad</a></li>
+                <li><a href="#" onclick="showComingSoon()">Iniciar Sesión</a></li>
+            </ul>
+            <a href="#" class="cta-button" onclick="showComingSoon()">Comenzar Ahora</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <h1>Metacognición Aplicada</h1>
+                <p>Mejora tus habilidades cognitivas y emocionales a través de ejercicios interactivos diseñados por expertos. Supera tus límites mentales y alcanza tu máximo potencial.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn-primary pulse" onclick="showComingSoon()">Comenzar Entrenamiento</a>
+                    <a href="#features" class="btn-secondary">Explorar Funciones</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Entrenamiento Neurocientífico</h2>
+                <p>Ejercicios basados en evidencia científica para mejorar tus capacidades cognitivas y emocionales de manera medible</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Entrenamiento de Memoria</h3>
+                    <p>Ejercicios de memoria a corto plazo, técnicas de asociación y sistema de recordatorios espaciados para mejorar tu capacidad de retención.</p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Entrenamiento de Atención</h3>
+                    <p>Juegos de concentración, ejercicios de mindfulness y técnicas para manejar distracciones y mejorar tu enfoque.</p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Manejo del Estrés</h3>
+                    <p>Técnicas de relajación, resolución de problemas y diario de estrés para mantener tu bienestar emocional.</p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Supervisión del Aprendizaje</h3>
+                    <p>Autoevaluaciones, establecimiento de metas y feedback personalizado para seguir tu progreso constantemente.</p>
+                </div>
+
+                <div class="feature-card fade-in-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Entrenamiento de Hábitos</h3>
+                    <p>Planificación, seguimiento y técnicas de refuerzo para establecer nuevos hábitos y mantener la motivación.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <section id="dashboard" class="dashboard-preview">
+        <div class="container">
+            <div class="dashboard-content">
+                <div class="dashboard-text fade-in-up">
+                    <h2>Tu Progreso en Tiempo Real</h2>
+                    <p>Visualiza tu mejora constante con nuestro dashboard intuitivo. Cada ejercicio completado te acerca a tus objetivos cognitivos.</p>
+                    <p>Monitorea tu rendimiento en las cinco áreas de entrenamiento, desbloquea logros y mantén tu motivación con estadísticas detalladas de tu progreso.</p>
+                    <a href="#" class="cta-button" onclick="showComingSoon()">Ver Mi Dashboard</a>
+                </div>
+                <div class="dashboard-image fade-in-up">
+                    <img src="dashboard-mockup.png" alt="Dashboard de Metacognición Aplicada">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gamification Section -->
+    <section class="gamification">
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Sistema de Gamificación</h2>
+                <p>Mantén la motivación con logros, niveles y recompensas</p>
+            </div>
+            
+            <div class="badges-showcase">
+                <div class="badge-item fade-in-up">
+                    <div class="badge-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h4>Memory Master</h4>
+                    <p>Completa 100 ejercicios de memoria</p>
+                </div>
+                
+                <div class="badge-item fade-in-up">
+                    <div class="badge-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h4>Focus Champion</h4>
+                    <p>30 días de concentración perfecta</p>
+                </div>
+                
+                <div class="badge-item fade-in-up">
+                    <div class="badge-icon">
+                        <i class="fas fa-zen"></i>
+                    </div>
+                    <h4>Stress Buster</h4>
+                    <p>Domina técnicas de relajación</p>
+                </div>
+                
+                <div class="badge-item fade-in-up">
+                    <div class="badge-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h4>Consistency King</h4>
+                    <p>7 días de entrenamiento seguidos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="community">
+        <div class="container">
+            <div class="community-content fade-in-up">
+                <h2>Únete a la Comunidad</h2>
+                <p>Conecta con otros usuarios, comparte experiencias y crece juntos en tu jornada de mejora cognitiva</p>
+                
+                <div class="community-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10,000+</span>
+                        <span class="stat-label">Usuarios Activos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50,000+</span>
+                        <span class="stat-label">Ejercicios Completados</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1,000+</span>
+                        <span class="stat-label">Logros Desbloqueados</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Satisfacción de Usuarios</span>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn-primary" onclick="showComingSoon()">Unirse a la Comunidad</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Metacognición Aplicada</h3>
+                    <p>Plataforma SaaS diseñada para mejorar las habilidades cognitivas y emocionales de los usuarios a través de ejercicios interactivos.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <p><a href="#features">Características</a></p>
+                    <p><a href="#dashboard">Dashboard</a></p>
+                    <p><a href="#community">Comunidad</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Soporte</h3>
+                    <p><a href="#" onclick="showComingSoon()">Centro de Ayuda</a></p>
+                    <p><a href="#" onclick="showComingSoon()">Contacto</a></p>
+                    <p><a href="#" onclick="showComingSoon()">Términos y Condiciones</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Metacognición Aplicada. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Coming soon popup
+        function showComingSoon() {
+            alert('🚀 ¡Próximamente! Esta función estará disponible muy pronto. Gracias por tu interés en Metacognición Aplicada.');
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(44, 62, 80, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

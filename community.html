@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad - Metacognición Aplicada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --light: #ECF0F1;
+            --gray: #BDC3C7;
+            --dark-gray: #95A5A6;
+            --background: #FAFAFA;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            background-color: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(44, 62, 80, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .community-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .community-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .community-header p {
+            color: var(--dark-gray);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Community Stats */
+        .community-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        /* Community Sections */
+        .community-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .btn-primary {
+            background-color: var(--success);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        /* Discussion Forum */
+        .discussion-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .discussion-item:last-child {
+            border-bottom: none;
+        }
+
+        .user-avatar-small {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary), var(--warning));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            flex-shrink: 0;
+        }
+
+        .discussion-content {
+            flex: 1;
+        }
+
+        .discussion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .discussion-time {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .discussion-text {
+            color: var(--dark-gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .discussion-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .action-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Challenges */
+        .challenge-item {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-item:hover {
+            background: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .challenge-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .challenge-badge {
+            background: var(--warning);
+            color: var(--white);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .challenge-description {
+            color: var(--dark-gray);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .challenge-progress {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            margin-right: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+            font-weight: 600;
+        }
+
+        .challenge-participants {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .participant-avatars {
+            display: flex;
+            margin-right: 0.5rem;
+        }
+
+        .participant-avatar {
+            width: 30px;
+            height: 30px;
+            background: var(--gray);
+            border-radius: 50%;
+            margin-left: -5px;
+            border: 2px solid var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .participant-count {
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        /* Leaderboard */
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 1rem;
+        }
+
+        .rank.top-3 {
+            background: linear-gradient(135deg, var(--warning), #E67E22);
+            color: var(--white);
+        }
+
+        .leaderboard-user {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .leaderboard-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .leaderboard-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .leaderboard-score {
+            font-weight: 700;
+            color: var(--success);
+            font-size: 1.1rem;
+        }
+
+        /* Groups */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .group-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .group-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .group-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary), var(--warning));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+
+        .group-info h3 {
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .group-members {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .group-description {
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .group-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .group-stat {
+            text-align: center;
+        }
+
+        .group-stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+        }
+
+        .group-stat-label {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .community-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .groups-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Metacognición</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="exercises.html">Ejercicios</a></li>
+                <li><a href="community.html" class="active">Comunidad</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-avatar">JD</div>
+                <a href="#" class="cta-button" onclick="showComingSoon()">Perfil</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Community Header -->
+            <div class="community-header fade-in-up">
+                <h1>Comunidad Metacognición</h1>
+                <p>Conecta con otros usuarios, comparte experiencias y crece juntos en tu jornada de mejora cognitiva</p>
+            </div>
+
+            <!-- Community Stats -->
+            <div class="community-stats">
+                <div class="stat-card fade-in-up">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="stat-number">10,247</span>
+                    <div class="stat-label">Usuarios Activos</div>
+                </div>
+
+                <div class="stat-card fade-in-up">
+                    <div class="stat-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <span class="stat-number">3,891</span>
+                    <div class="stat-label">Discusiones</div>
+                </div>
+
+                <div class="stat-card fade-in-up">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <span class="stat-number">156</span>
+                    <div class="stat-label">Retos Activos</div>
+                </div>
+
+                <div class="stat-card fade-in-up">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <span class="stat-number">2,450</span>
+                    <div class="stat-label">Eventos Completados</div>
+                </div>
+            </div>
+
+            <!-- Main Community Content -->
+            <div class="community-grid">
+                <!-- Discussion Forum -->
+                <div class="section-card fade-in-up">
+                    <div class="section-header">
+                        <h2 class="section-title">Foro de Discusión</h2>
+                        <a href="#" class="btn-primary" onclick="showComingSoon()">Nuevo Tema</a>
+                    </div>
+
+                    <div class="discussion-item">
+                        <div class="user-avatar-small">MA</div>
+                        <div class="discussion-content">
+                            <div class="discussion-header">
+                                <span class="user-name">María Antonia</span>
+                                <span class="discussion-time">Hace 2 horas</span>
+                            </div>
+                            <div class="discussion-text">
+                                ¿Alguien ha notado mejoras significativas en su memoria después de 3 semanas de entrenamiento? Estoy en el nivel 8 y siento que puedo recordar números de teléfono mucho mejor.
+                            </div>
+                            <div class="discussion-actions">
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-thumbs-up"></i> 12
+                                </button>
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-comment"></i> 5 respuestas
+                                </button>
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-share"></i> Compartir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="discussion-item">
+                        <div class="user-avatar-small">CR</div>
+                        <div class="discussion-content">
+                            <div class="discussion-header">
+                                <span class="user-name">Carlos Rodríguez</span>
+                                <span class="discussion-time">Hace 4 horas</span>
+                            </div>
+                            <div class="discussion-text">
+                                Los ejercicios de respiración 4-7-8 me han ayudado muchísimo con el estrés laboral. Los hago cada mañana antes de entrar a la oficina. ¿Alguien más tiene rutinas similares?
+                            </div>
+                            <div class="discussion-actions">
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-thumbs-up"></i> 18
+                                </button>
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-comment"></i> 8 respuestas
+                                </button>
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-share"></i> Compartir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="discussion-item">
+                        <div class="user-avatar-small">AL</div>
+                        <div class="discussion-content">
+                            <div class="discussion-header">
+                                <span class="user-name">Ana López</span>
+                                <span class="discussion-time">Hace 6 horas</span>
+                            </div>
+                            <div class="discussion-text">
+                                Comparto mi experiencia: después de 2 meses usando la app, mi capacidad de concentración en reuniones largas ha mejorado un 70%. Los ejercicios de atención sostenida son clave.
+                            </div>
+                            <div class="discussion-actions">
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-thumbs-up"></i> 24
+                                </button>
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-comment"></i> 12 respuestas
+                                </button>
+                                <button class="action-btn" onclick="showComingSoon()">
+                                    <i class="fas fa-share"></i> Compartir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Active Challenges -->
+                    <div class="section-card fade-in-up">
+                        <div class="section-header">
+                            <h2 class="section-title">Retos Activos</h2>
+                            <a href="#" class="btn-primary" onclick="showComingSoon()">Ver Todos</a>
+                        </div>
+
+                        <div class="challenge-item">
+                            <div class="challenge-header">
+                                <div class="challenge-title">Desafío de Memoria</div>
+                                <div class="challenge-badge">7 días</div>
+                            </div>
+                            <div class="challenge-description">
+                                Completa 5 ejercicios de memoria diferentes durante 7 días consecutivos
+                            </div>
+                            <div class="challenge-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%"></div>
+                                </div>
+                                <div class="progress-text">4/7 días</div>
+                            </div>
+                            <div class="challenge-participants">
+                                <div class="participant-avatars">
+                                    <div class="participant-avatar">MA</div>
+                                    <div class="participant-avatar">CR</div>
+                                    <div class="participant-avatar">AL</div>
+                                    <div class="participant-avatar">+5</div>
+                                </div>
+                                <div class="participant-count">234 participantes</div>
+                            </div>
+                        </div>
+
+                        <div class="challenge-item">
+                            <div class="challenge-header">
+                                <div class="challenge-title">Mindfulness Diario</div>
+                                <div class="challenge-badge">30 días</div>
+                            </div>
+                            <div class="challenge-description">
+                                Practica al menos 10 minutos de mindfulness cada día durante un mes
+                            </div>
+                            <div class="challenge-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 25%"></div>
+                                </div>
+                                <div class="progress-text">8/30 días</div>
+                            </div>
+                            <div class="challenge-participants">
+                                <div class="participant-avatars">
+                                    <div class="participant-avatar">JD</div>
+                                    <div class="participant-avatar">MA</div>
+                                    <div class="participant-avatar">+12</div>
+                                </div>
+                                <div class="participant-count">156 participantes</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboard -->
+                    <div class="section-card fade-in-up" style="margin-top: 2rem;">
+                        <div class="section-header">
+                            <h2 class="section-title">Tabla de Lideres</h2>
+                            <a href="#" class="btn-primary" onclick="showComingSoon()">Ver Completa</a>
+                        </div>
+
+                        <div class="leaderboard-item">
+                            <div class="rank top-3">1</div>
+                            <div class="leaderboard-user">
+                                <div class="leaderboard-avatar">EP</div>
+                                <div class="leaderboard-name">Elena Pérez</div>
+                            </div>
+                            <div class="leaderboard-score">2,450 XP</div>
+                        </div>
+
+                        <div class="leaderboard-item">
+                            <div class="rank top-3">2</div>
+                            <div class="leaderboard-user">
+                                <div class="leaderboard-avatar">MR</div>
+                                <div class="leaderboard-name">Miguel Ramírez</div>
+                            </div>
+                            <div class="leaderboard-score">2,380 XP</div>
+                        </div>
+
+                        <div class="leaderboard-item">
+                            <div class="rank top-3">3</div>
+                            <div class="leaderboard-user">
+                                <div class="leaderboard-avatar">SL</div>
+                                <div class="leaderboard-name">Sofia López</div>
+                            </div>
+                            <div class="leaderboard-score">2,290 XP</div>
+                        </div>
+
+                        <div class="leaderboard-item">
+                            <div class="rank">4</div>
+                            <div class="leaderboard-user">
+                                <div class="leaderboard-avatar">JD</div>
+                                <div class="leaderboard-name">Juan Díaz (Tú)</div>
+                            </div>
+                            <div class="leaderboard-score">2,180 XP</div>
+                        </div>
+
+                        <div class="leaderboard-item">
+                            <div class="rank">5</div>
+                            <div class="leaderboard-user">
+                                <div class="leaderboard-avatar">AL</div>
+                                <div class="leaderboard-name">Ana López</div>
+                            </div>
+                            <div class="leaderboard-score">2,150 XP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Study Groups -->
+            <div class="section-card fade-in-up">
+                <div class="section-header">
+                    <h2 class="section-title">Grupos de Estudio</h2>
+                    <a href="#" class="btn-primary" onclick="showComingSoon()">Crear Grupo</a>
+                </div>
+
+                <div class="groups-grid">
+                    <div class="group-card">
+                        <div class="group-header">
+                            <div class="group-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <div class="group-info">
+                                <h3>Memory Masters</h3>
+                                <div class="group-members">156 miembros</div>
+                            </div>
+                        </div>
+                        <div class="group-description">
+                            Grupo enfocado en técnicas avanzadas de memorización y ejercicios de memoria a largo plazo.
+                        </div>
+                        <div class="group-stats">
+                            <div class="group-stat">
+                                <span class="group-stat-value">12</span>
+                                <span class="group-stat-label">Ejercicios/día</span>
+                            </div>
+                            <div class="group-stat">
+                                <span class="group-stat-value">89%</span>
+                                <span class="group-stat-label">Precisión</span>
+                            </div>
+                            <div class="group-stat">
+                                <span class="group-stat-value">45</span>
+                                <span class="group-stat-label">Días activos</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="showComingSoon()">Unirse</button>
+                    </div>
+
+                    <div class="group-card">
+                        <div class="group-header">
+                            <div class="group-icon">
+                                <i class="fas fa-zen"></i>
+                            </div>
+                            <div class="group-info">
+                                <h3>Mindfulness Collective</h3>
+                                <div class="group-members">89 miembros</div>
+                            </div>
+                        </div>
+                        <div class="group-description">
+                            Comunidad dedicada a la práctica diaria de mindfulness y técnicas de reducción de estrés.
+                        </div>
+                        <div class="group-stats">
+                            <div class="group-stat">
+                                <span class="group-stat-value">25</span>
+                                <span class="group-stat-label">Min/día</span>
+                            </div>
+                            <div class="group-stat">
+                                <span class="group-stat-value">95%</span>
+                                <span class="group-stat-label">Asistencia</span>
+                            </div>
+                            <div class="group-stat">
+                                <span class="group-stat-value">30</span>
+                                <span class="group-stat-label">Días racha</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="showComingSoon()">Unirse</button>
+                    </div>
+
+                    <div class="group-card">
+                        <div class="group-header">
+                            <div class="group-icon">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                            <div class="group-info">
+                                <h3>Focus Warriors</h3>
+                                <div class="group-members">234 miembros</div>
+                            </div>
+                        </div>
+                        <div class="group-description">
+                            Entrenamiento intensivo en concentración y atención sostenida para mejorar productividad.
+                        </div>
+                        <div class="group-stats">
+                            <div class="group-stat">
+                                <span class="group-stat-value">18</span>
+                                <span class="group-stat-label">Ejercicios/día</span>
+                            </div>
+                            <div class="group-stat">
+                                <span class="group-stat-value">82%</span>
+                                <span class="group-stat-label">Precisión</span>
+                            </div>
+                            <div class="group-stat">
+                                <span class="group-stat-value">60</span>
+                                <span class="group-stat-label">Días activos</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="showComingSoon()">Unirse</button>
+                    </div>
+
+                    <div class="group-card">
+                        <div class="group-header">
+                            <div class="group-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div class="group-info">
+                                <h3>Habit Builders</h3>
+                                <div class="group-members">312 miembros</div>
+                            </div>
+                        </div>
+                        <div class="group-description">
+                            Apoyo mutuo para establecer y mantener nuevos hábitos cognitivos y de bienestar.
+                        </div>
+                        <div class="group-stats">
+                            <div class="group-stat">
+                                <span class="group-stat-value">5</span>
+                                <span class="group-stat-label">Hábitos/día</span>
+                            </div>
+                            <div class="group-stat">
+                                <span class="group-stat-value">91%</span>
+                                <span class="group-stat-label">Éxito</span>
+                            </div>
+                            <div class="group-stat">
+                                <span class="group-stat-value">90</span>
+                                <span class="group-stat-label">Días activos</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary" onclick="showComingSoon()">Unirse</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Coming soon popup
+        function showComingSoon() {
+            alert('🚀 ¡Próximamente! Esta función estará disponible muy pronto. Gracias por tu interés en Metacognición Aplicada.');
+        }
+
+        // Simulate real-time updates
+        function updateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const currentValue = parseInt(stat.textContent.replace(/,/g, ''));
+                const increment = Math.floor(Math.random() * 3) + 1;
+                const newValue = currentValue + increment;
+                stat.textContent = newValue.toLocaleString();
+            });
+        }
+
+        // Update stats every 30 seconds
+        setInterval(updateStats, 30000);
+
+        // Add hover effects to interactive elements
+        document.querySelectorAll('.challenge-item, .group-card, .discussion-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(44, 62, 80, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios Científicos - Metacognición Aplicada</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --light: #ECF0F1;
+            --gray: #BDC3C7;
+            --dark-gray: #95A5A6;
+            --background: #FAFAFA;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary);
+            background-color: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(44, 62, 80, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--success);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .exercises-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .exercises-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .exercises-header p {
+            color: var(--dark-gray);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Scientific Evidence Banner */
+        .evidence-banner {
+            background: linear-gradient(135deg, var(--success), var(--secondary));
+            color: var(--white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .evidence-banner h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+        }
+
+        .evidence-banner p {
+            opacity: 0.9;
+        }
+
+        /* Exercise Categories */
+        .exercise-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .category-info h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .category-info .level {
+            color: var(--success);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .category-description {
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .scientific-evidence {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--warning);
+        }
+
+        .scientific-evidence h4 {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .scientific-evidence h4 i {
+            margin-right: 0.5rem;
+            color: var(--warning);
+        }
+
+        .scientific-evidence p {
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        .btn-primary {
+            background-color: var(--success);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #229954;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        /* Exercise Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            color: var(--dark-gray);
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--primary);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-header p {
+            color: var(--dark-gray);
+        }
+
+        /* Working Memory Exercise - Dual N-Back */
+        .memory-exercise {
+            text-align: center;
+        }
+
+        .n-back-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 300px;
+            margin: 2rem auto;
+        }
+
+        .n-back-cell {
+            width: 80px;
+            height: 80px;
+            background: var(--light);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .n-back-cell.active {
+            background: var(--secondary);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        .n-back-cell.match {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .n-back-cell.wrong {
+            background: #E74C3C;
+            color: var(--white);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .n-back-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .n-back-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .n-back-level {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .n-back-score {
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        /* Attention Training - Stroop Test */
+        .attention-exercise {
+            text-align: center;
+        }
+
+        .stroop-display {
+            font-size: 4rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .color-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+
+        .color-option {
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .color-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-red { background-color: #E74C3C; color: white; }
+        .color-blue { background-color: #3498DB; color: white; }
+        .color-green { background-color: #27AE60; color: white; }
+        .color-yellow { background-color: #F39C12; color: white; }
+
+        .stroop-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .stroop-stat {
+            text-align: center;
+        }
+
+        .stroop-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stroop-stat-label {
+            font-size: 0.8rem;
+            color: var(--dark-gray);
+        }
+
+        /* Breathing Exercise - 4-7-8 Technique */
+        .breathing-exercise {
+            text-align: center;
+        }
+
+        .breathing-circle {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--success));
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breathing-circle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: pulse 4s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.8); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .breathing-circle.inhale {
+            transform: scale(1.3);
+            background: linear-gradient(135deg, var(--secondary), #5DADE2);
+        }
+
+        .breathing-circle.hold {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, var(--warning), #F8C471);
+        }
+
+        .breathing-circle.exhale {
+            transform: scale(0.8);
+            background: linear-gradient(135deg, var(--success), #58D68D);
+        }
+
+        .breathing-instructions {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin: 1rem 0;
+            font-weight: 600;
+            min-height: 40px;
+        }
+
+        .breathing-count {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 1rem 0;
+            min-height: 80px;
+        }
+
+        .breathing-cycle {
+            font-size: 1.2rem;
+            color: var(--dark-gray);
+            margin-bottom: 2rem;
+        }
+
+        .breathing-benefits {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .breathing-benefits h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .breathing-benefits h4 i {
+            margin-right: 0.5rem;
+            color: var(--success);
+        }
+
+        .breathing-benefits ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .breathing-benefits li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .breathing-benefits li:last-child {
+            border-bottom: none;
+        }
+
+        .breathing-benefits li i {
+            margin-right: 0.5rem;
+            color: var(--success);
+            margin-top: 0.2rem;
+        }
+
+        /* Results Display */
+        .results {
+            text-align: center;
+            padding: 2rem;
+            background: var(--light);
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .results h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .results p {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .results .score-display {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--success);
+            margin: 1rem 0;
+        }
+
+        .results .improvement-tips {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .results .improvement-tips h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .results .improvement-tips ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .results .improvement-tips li {
+            padding: 0.3rem 0;
+            color: var(--dark-gray);
+        }
+
+        .results .improvement-tips li:before {
+            content: "✓";
+            color: var(--success);
+            margin-right: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .exercise-categories {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .n-back-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 200px;
+            }
+
+            .n-back-cell {
+                width: 60px;
+                height: 60px;
+                font-size: 1.2rem;
+            }
+
+            .color-options {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 200px;
+            }
+
+            .stroop-display {
+                font-size: 3rem;
+            }
+
+            .breathing-circle {
+                width: 200px;
+                height: 200px;
+                font-size: 1.2rem;
+            }
+
+            .breathing-instructions {
+                font-size: 1.5rem;
+            }
+
+            .breathing-count {
+                font-size: 3rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Metacognición</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="exercises-functional.html" class="active">Ejercicios Científicos</a></li>
+                <li><a href="community.html">Comunidad</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-avatar">JD</div>
+                <a href="#" class="cta-button" onclick="showComingSoon()">Perfil</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Exercises Header -->
+            <div class="exercises-header fade-in-up">
+                <h1>Ejercicios Neurocientíficos</h1>
+                <p>Entrenamientos basados en evidencia científica para mejorar tus capacidades cognitivas y emocionales</p>
+            </div>
+
+            <!-- Scientific Evidence Banner -->
+            <div class="evidence-banner fade-in-up">
+                <h3><i class="fas fa-microscope"></i> Basado en Evidencia Científica</h3>
+                <p>Todos nuestros ejercicios están respaldados por investigaciones en neurociencia, psicología cognitiva y medicina del estilo de vida</p>
+            </div>
+
+            <!-- Exercise Categories -->
+            <div class="exercise-categories">
+                <!-- Working Memory - Dual N-Back -->
+                <div class="category-card fade-in-up" onclick="openExercise('memory')">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="category-info">
+                            <h3>Memoria de Trabajo - Dual N-Back</h3>
+                            <div class="level">Nivel Científico</div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        El entrenamiento Dual N-Back es el único método probado científicamente para aumentar la inteligencia fluida (IQ). Mejora la memoria de trabajo, la atención sostenida y la capacidad de resolver problemas nuevos.
+                    </div>
+                    <div class="scientific-evidence">
+                        <h4><i class="fas fa-flask"></i> Evidencia Científica</h4>
+                        <p>Estudios de Jaeggi et al. (2008, 2010) demostraron mejoras en IQ de 5-20 puntos después de 19 sesiones. Activación de áreas prefrontales y parietales en neuroimagen.</p>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat">
+                            <span class="stat-value">19</span>
+                            <span class="stat-label">Sesiones óptimas</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">+15</span>
+                            <span class="stat-label">Puntos de IQ</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">25</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary">Comenzar Entrenamiento</button>
+                </div>
+
+                <!-- Attention Training - Stroop Test -->
+                <div class="category-card fade-in-up" onclick="openExercise('attention')">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="category-info">
+                            <h3>Atención Selectiva - Test de Stroop</h3>
+                            <div class="level">Neuropsicológico</div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        El Test de Stroop evalúa la capacidad de inhibición cognitiva y flexibilidad mental. Fortalece el control ejecutivo y la capacidad para ignorar distracciones, fundamental para la concentración.
+                    </div>
+                    <div class="scientific-evidence">
+                        <h4><i class="fas fa-chart-line"></i> Fundamento Neurológico</h4>
+                        <p>Activa el cíngulo anterior y corteza prefrontal. Mejora la capacidad de inhibición de respuestas automáticas, crucial para el autocontrol y toma de decisiones.</p>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat">
+                            <span class="stat-value">85%</span>
+                            <span class="stat-label">Precisión meta</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">&lt;800ms</span>
+                            <span class="stat-label">Tiempo respuesta</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">20</span>
+                            <span class="stat-label">Min/día</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary">Iniciar Test</button>
+                </div>
+
+                <!-- Stress Management - 4-7-8 Breathing -->
+                <div class="category-card fade-in-up" onclick="openExercise('stress')">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="category-info">
+                            <h3>Manejo del Estrés - Respiración 4-7-8</h3>
+                            <div class="level">Clínicamente Validado</div>
+                        </div>
+                    </div>
+                    <div class="category-description">
+                        Técnica respiratoria desarrollada por el Dr. Andrew Weil, basada en pranayama yoga. Reduce ansiedad, mejora la variabilidad de frecuencia cardíaca (HRV) y activa el sistema nervioso parasimpático.
+                    </div>
+                    <div class="scientific-evidence">
+                        <h4><i class="fas fa-heartbeat"></i> Evidencia Clínica</h4>
+                        <p>Estudios en Journal of American Heart Association demuestran reducción de presión arterial (-9 mmHg), mejora de HRV y disminución de cortisol. Activación del nervio vago.</p>
+                    </div>
+                    <div class="category-stats">
+                        <div class="stat">
+                            <span class="stat-value">-9</span>
+                            <span class="stat-label">mmHg PA sistólica</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">+25%</span>
+                            <span class="stat-label">HRV mejora</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">15</span>
+                            <span class="stat-label">Min/sesión</span>
+                        </div>
+                    </div>
+                    <button class="btn-primary">Practicar Técnica</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Exercise Modal -->
+    <div id="exerciseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle">Ejercicio Neurocientífico</h2>
+                <p id="modalDescription">Descripción del ejercicio basado en evidencia científica</p>
+            </div>
+            <div id="exerciseContent">
+                <!-- Exercise content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Coming soon popup
+        function showComingSoon() {
+            alert('🚀 ¡Próximamente! Esta función estará disponible muy pronto. Gracias por tu interés en Metacognición Aplicada.');
+        }
+
+        // Exercise data with scientific evidence
+        const exercises = {
+            memory: {
+                title: "Memoria de Trabajo - Dual N-Back",
+                description: "Entrenamiento científicamente probado para aumentar la inteligencia fluida",
+                content: createMemoryExercise()
+            },
+            attention: {
+                title: "Atención Selectiva - Test de Stroop",
+                description: "Evaluación neuropsicológica del control ejecutivo e inhibición cognitiva",
+                content: createAttentionExercise()
+            },
+            stress: {
+                title: "Manejo del Estrés - Respiración 4-7-8",
+                description: "Técnica respiratoria clínicamente validada para reducir estrés y ansiedad",
+                content: createStressExercise()
+            }
+        };
+
+        // Open exercise modal
+        function openExercise(type) {
+            const modal = document.getElementById('exerciseModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const exerciseContent = document.getElementById('exerciseContent');
+
+            modalTitle.textContent = exercises[type].title;
+            modalDescription.textContent = exercises[type].description;
+            exerciseContent.innerHTML = exercises[type].content;
+
+            modal.style.display = 'block';
+
+            // Initialize exercise based on type
+            if (type === 'memory') {
+                initMemoryExercise();
+            } else if (type === 'attention') {
+                initAttentionExercise();
+            } else if (type === 'stress') {
+                initStressExercise();
+            }
+        }
+
+        // Close modal
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('exerciseModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('exerciseModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Create Dual N-Back Memory Exercise
+        function createMemoryExercise() {
+            return `
+                <div class="memory-exercise">
+                    <div class="n-back-info">
+                        <div class="n-back-level">Nivel: <span id="nLevel">1</span>-Back</div>
+                        <div class="n-back-score">Puntuación: <span id="nScore">0</span></div>
+                        <div class="n-back-score">Racha: <span id="nStreak">0</span></div>
+                    </div>
+                    <div class="n-back-grid" id="nBackGrid">
+                        <div class="n-back-cell" data-position="0">1</div>
+                        <div class="n-back-cell" data-position="1">2</div>
+                        <div class="n-back-cell" data-position="2">3</div>
+                        <div class="n-back-cell" data-position="3">4</div>
+                        <div class="n-back-cell" data-position="4">5</div>
+                        <div class="n-back-cell" data-position="5">6</div>
+                        <div class="n-back-cell" data-position="6">7</div>
+                        <div class="n-back-cell" data-position="7">8</div>
+                        <div class="n-back-cell" data-position="8">9</div>
+                    </div>
+                    <div class="n-back-controls">
+                        <button class="btn btn-warning" id="startNBack">Iniciar Entrenamiento</button>
+                        <button class="btn btn-success" id="matchVisual" style="display: none;">Coincidencia Visual</button>
+                        <button class="btn btn-secondary" id="restartNBack">Reiniciar</button>
+                    </div>
+                    <div id="memoryResults" class="results" style="display: none;"></div>
+                </div>
+            `;
+        }
+
+        // Initialize Dual N-Back Exercise
+        function initMemoryExercise() {
+            let level = 1;
+            let score = 0;
+            let streak = 0;
+            let sequence = [];
+            let currentIndex = 0;
+            let gameActive = false;
+            let visualMatch = false;
+            let lastPosition = -1;
+            let lastNumber = -1;
+            let startTime;
+
+            const levelDisplay = document.getElementById('nLevel');
+            const scoreDisplay = document.getElementById('nScore');
+            const streakDisplay = document.getElementById('nStreak');
+            const grid = document.getElementById('nBackGrid');
+            const cells = grid.querySelectorAll('.n-back-cell');
+            const startBtn = document.getElementById('startNBack');
+            const matchBtn = document.getElementById('matchVisual');
+            const restartBtn = document.getElementById('restartNBack');
+            const resultsDiv = document.getElementById('memoryResults');
+
+            function generateSequence(length) {
+                sequence = [];
+                for (let i = 0; i < length; i++) {
+                    sequence.push({
+                        position: Math.floor(Math.random() * 9),
+                        number: Math.floor(Math.random() * 9) + 1
+                    });
+                }
+            }
+
+            function showNext() {
+                if (currentIndex >= sequence.length) {
+                    endSession();
+                    return;
+                }
+
+                const current = sequence[currentIndex];
+                
+                // Reset all cells
+                cells.forEach(cell => cell.className = 'n-back-cell');
+                
+                // Highlight current position
+                cells[current.position].classList.add('active');
+                cells[current.position].textContent = current.number;
+                
+                // Check for matches
+                visualMatch = false;
+                if (currentIndex >= level) {
+                    const nBack = sequence[currentIndex - level];
+                    if (nBack.position === current.position) {
+                        visualMatch = true;
+                    }
+                }
+                
+                lastPosition = current.position;
+                lastNumber = current.number;
+                
+                setTimeout(() => {
+                    cells[current.position].classList.remove('active');
+                    cells[current.position].textContent = current.position + 1;
+                    
+                    if (visualMatch) {
+                        matchBtn.style.display = 'inline-block';
+                    } else {
+                        matchBtn.style.display = 'none';
+                    }
+                    
+                    currentIndex++;
+                    
+                    if (gameActive) {
+                        setTimeout(showNext, 2000 + (level * 200));
+                    }
+                }, 1500 + (level * 100));
+            }
+
+            function startSession() {
+                level = 1;
+                score = 0;
+                streak = 0;
+                currentIndex = 0;
+                gameActive = true;
+                startTime = Date.now();
+                
+                updateDisplay();
+                generateSequence(20 + (level * 5));
+                startBtn.style.display = 'none';
+                resultsDiv.style.display = 'none';
+                
+                showNext();
+            }
+
+            function handleMatch() {
+                if (visualMatch) {
+                    score += 10 * level;
+                    streak++;
+                    cells[lastPosition].classList.add('match');
+                    
+                    if (streak > 0 && streak % 5 === 0 && level < 5) {
+                        level++;
+                    }
+                } else {
+                    score -= 5;
+                    streak = 0;
+                    cells[lastPosition].classList.add('wrong');
+                }
+                
+                updateDisplay();
+                matchBtn.style.display = 'none';
+                
+                setTimeout(() => {
+                    cells[lastPosition].classList.remove('match', 'wrong');
+                }, 1000);
+            }
+
+            function updateDisplay() {
+                levelDisplay.textContent = level;
+                scoreDisplay.textContent = score;
+                streakDisplay.textContent = streak;
+            }
+
+            function endSession() {
+                gameActive = false;
+                const sessionTime = Math.round((Date.now() - startTime) / 1000);
+                
+                let performance = '';
+                let tips = [];
+                
+                if (score > 200) {
+                    performance = 'Excelente';
+                    tips = ['Tu memoria de trabajo está en el top 10%', 'Considera aumentar el nivel de dificultad', 'Practica 3-4 veces por semana para mantener']; 
+                } else if (score > 100) {
+                    performance = 'Bueno';
+                    tips = ['Estás en el rango promedio', 'La práctica regular mejorará tu puntuación', 'Enfócate en mantener la racha']; 
+                } else {
+                    performance = 'Necesita Mejora';
+                    tips = ['Comienza con N-Back nivel 1', 'La mejora requiere constancia', 'No te desanimes, es normal al principio']; 
+                }
+                
+                resultsDiv.innerHTML = `
+                    <h3>Entrenamiento Completado</h3>
+                    <div class="score-display">${score} XP</div>
+                    <p><strong>Rendimiento:</strong> ${performance}</p>
+                    <p><strong>Tiempo:</strong> ${sessionTime} segundos</p>
+                    <p><strong>Nivel alcanzado:</strong> ${level}-Back</p>
+                    <p><strong>Racha máxima:</strong> ${streak} respuestas correctas</p>
+                    <div class="improvement-tips">
+                        <h4>Recomendaciones de mejora:</h4>
+                        <ul>
+                            ${tips.map(tip => `<li>${tip}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                resultsDiv.style.display = 'block';
+                startBtn.style.display = 'inline-block';
+                startBtn.textContent = 'Nueva Sesión';
+            }
+
+            startBtn.onclick = startSession;
+            matchBtn.onclick = handleMatch;
+            restartBtn.onclick = function() {
+                gameActive = false;
+                level = 1;
+                score = 0;
+                streak = 0;
+                currentIndex = 0;
+                updateDisplay();
+                startBtn.style.display = 'inline-block';
+                startBtn.textContent = 'Iniciar Entrenamiento';
+                matchBtn.style.display = 'none';
+                resultsDiv.style.display = 'none';
+                cells.forEach((cell, index) => {
+                    cell.className = 'n-back-cell';
+                    cell.textContent = index + 1;
+                });
+            };
+        }
+
+        // Create Stroop Attention Exercise
+        function createAttentionExercise() {
+            const colors = [
+                { name: 'ROJO', value: '#E74C3C', text: 'ROJO' },
+                { name: 'AZUL', value: '#3498DB', text: 'AZUL' },
+                { name: 'VERDE', value: '#27AE60', text: 'VERDE' },
+                { name: 'AMARILLO', value: '#F39C12', text: 'AMARILLO' }
+            ];
+            
+            return `
+                <div class="attention-exercise">
+                    <div class="stroop-display" id="stroopDisplay">Presiona "Iniciar Test"</div>
+                    <div class="stroop-stats">
+                        <div class="stroop-stat">
+                            <span class="stroop-stat-value" id="correctCount">0</span>
+                            <span class="stroop-stat-label">Correctas</span>
+                        </div>
+                        <div class="stroop-stat">
+                            <span class="stroop-stat-value" id="totalCount">0</span>
+                            <span class="stroop-stat-label">Total</span>
+                        </div>
+                        <div class="stroop-stat">
+                            <span class="stroop-stat-value" id="avgTime">0</span>
+                            <span class="stroop-stat-label">Tiempo promedio (ms)</span>
+                        </div>
+                        <div class="stroop-stat">
+                            <span class="stroop-stat-value" id="accuracy">0%</span>
+                            <span class="stroop-stat-label">Precisión</span>
+                        </div>
+                    </div>
+                    <div class="color-options" id="colorOptions">
+                        ${colors.map((color, index) => 
+                            `<button class="color-option color-${color.name.toLowerCase()}" 
+                                     data-color="${color.value}" 
+                                     onclick="selectColor('${color.value}')">
+                                ${color.text}
+                            </button>`
+                        ).join('')}
+                    </div>
+                    <div class="exercise-controls">
+                        <button class="btn btn-warning" id="startStroop">Iniciar Test</button>
+                        <button class="btn btn-secondary" id="restartStroop">Reiniciar</button>
+                    </div>
+                    <div id="stroopResults" class="results" style="display: none;"></div>
+                </div>
+            `;
+        }
+
+        // Initialize Stroop Exercise
+        function initAttentionExercise() {
+            let currentTrial = 0;
+            let correctAnswers = 0;
+            let totalTrials = 0;
+            let reactionTimes = [];
+            let gameActive = false;
+            let currentWord = '';
+            let currentColor = '';
+            let trialStartTime;
+
+            const colors = [
+                { name: 'ROJO', value: '#E74C3C' },
+                { name: 'AZUL', value: '#3498DB' },
+                { name: 'VERDE', value: '#27AE60' },
+                { name: 'AMARILLO', value: '#F39C12' }
+            ];
+
+            const display = document.getElementById('stroopDisplay');
+            const correctDisplay = document.getElementById('correctCount');
+            const totalDisplay = document.getElementById('totalCount');
+            const timeDisplay = document.getElementById('avgTime');
+            const accuracyDisplay = document.getElementById('accuracy');
+            const startBtn = document.getElementById('startStroop');
+            const restartBtn = document.getElementById('restartStroop');
+            const resultsDiv = document.getElementById('stroopResults');
+
+            function generateTrial() {
+                const wordIndex = Math.floor(Math.random() * colors.length);
+                const colorIndex = Math.floor(Math.random() * colors.length);
+                
+                currentWord = colors[wordIndex].name;
+                currentColor = colors[colorIndex].value;
+                
+                display.textContent = currentWord;
+                display.style.color = currentColor;
+                display.style.backgroundColor = 'var(--light)';
+                
+                trialStartTime = Date.now();
+            }
+
+            function startTest() {
+                currentTrial = 0;
+                correctAnswers = 0;
+                totalTrials = 0;
+                reactionTimes = [];
+                gameActive = true;
+                
+                updateStats();
+                startBtn.style.display = 'none';
+                resultsDiv.style.display = 'none';
+                
+                generateTrial();
+            }
+
+            window.selectColor = function(selectedColor) {
+                if (!gameActive) return;
+                
+                const reactionTime = Date.now() - trialStartTime;
+                reactionTimes.push(reactionTime);
+                
+                const isCorrect = selectedColor === currentColor;
+                
+                if (isCorrect) {
+                    correctAnswers++;
+                    display.style.backgroundColor = 'var(--success)';
+                } else {
+                    display.style.backgroundColor = '#E74C3C';
+                }
+                
+                totalTrials++;
+                updateStats();
+                
+                setTimeout(() => {
+                    currentTrial++;
+                    
+                    if (currentTrial >= 20) {
+                        endTest();
+                    } else {
+                        generateTrial();
+                    }
+                }, 1000);
+            };
+
+            function updateStats() {
+                correctDisplay.textContent = correctAnswers;
+                totalDisplay.textContent = totalTrials;
+                
+                const avgTime = reactionTimes.length > 0 ? 
+                    Math.round(reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length) : 0;
+                timeDisplay.textContent = avgTime;
+                
+                const accuracy = totalTrials > 0 ? Math.round((correctAnswers / totalTrials) * 100) : 0;
+                accuracyDisplay.textContent = accuracy + '%';
+            }
+
+            function endTest() {
+                gameActive = false;
+                
+                const avgTime = reactionTimes.length > 0 ? 
+                    Math.round(reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length) : 0;
+                const accuracy = Math.round((correctAnswers / totalTrials) * 100);
+                
+                let performance = '';
+                let tips = [];
+                
+                if (accuracy >= 90 && avgTime < 600) {
+                    performance = 'Excelente';
+                    tips = ['Tu control ejecutivo es superior', 'Mantén esta práctica regular', 'Considera aumentar la dificultad'];
+                } else if (accuracy >= 75) {
+                    performance = 'Bueno';
+                    tips = ['Estás en el rango promedio-alto', 'La práctica mejorará tu velocidad', 'Enfócate en la precisión primero'];
+                } else {
+                    performance = 'Necesita Mejora';
+                    tips = ['La inhibición cognitiva mejora con práctica', 'No te preocupes por la velocidad inicial', 'La constancia es clave'];
+                }
+                
+                resultsDiv.innerHTML = `
+                    <h3>Test de Stroop Completado</h3>
+                    <div class="score-display">${accuracy}% Precisión</div>
+                    <p><strong>Rendimiento:</strong> ${performance}</p>
+                    <p><strong>Tiempo promedio:</strong> ${avgTime}ms</p>
+                    <p><strong>Respuestas correctas:</strong> ${correctAnswers}/${totalTrials}</p>
+                    <p><strong>Efecto Stroop:</strong> ${avgTime > 600 ? 'Alto (dificultad para inhibir)' : 'Normal (buena inhibición)'}</p>
+                    <div class="improvement-tips">
+                        <h4>Análisis del rendimiento:</h4>
+                        <ul>
+                            ${tips.map(tip => `<li>${tip}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                resultsDiv.style.display = 'block';
+                startBtn.style.display = 'inline-block';
+                startBtn.textContent = 'Nuevo Test';
+            }
+
+            startBtn.onclick = startTest;
+            restartBtn.onclick = function() {
+                gameActive = false;
+                currentTrial = 0;
+                correctAnswers = 0;
+                totalTrials = 0;
+                reactionTimes = [];
+                updateStats();
+                startBtn.style.display = 'inline-block';
+                startBtn.textContent = 'Iniciar Test';
+                resultsDiv.style.display = 'none';
+                display.textContent = 'Presiona "Iniciar Test"';
+                display.style.color = 'var(--primary)';
+                display.style.backgroundColor = 'transparent';
+            };
+        }
+
+        // Create 4-7-8 Breathing Exercise
+        function createStressExercise() {
+            return `
+                <div class="breathing-exercise">
+                    <div class="breathing-circle" id="breathingCircle">
+                        <span id="circleText">Respiración 4-7-8</span>
+                    </div>
+                    <div class="breathing-instructions" id="instructions">Prepárate para comenzar la técnica respiratoria</div>
+                    <div class="breathing-count" id="count">--</div>
+                    <div class="breathing-cycle" id="cycle">Ciclo: 0/4</div>
+                    
+                    <div class="breathing-benefits">
+                        <h4><i class="fas fa-heartbeat"></i> Beneficios Clínicamente Comprobados</h4>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> <strong>Reducción de presión arterial:</strong> -9 mmHg en 6 semanas</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Mejora de HRV:</strong> Aumenta la variabilidad de frecuencia cardíaca</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Activación vagal:</strong> Estimula el nervio vago</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Reducción de cortisol:</strong> Disminuye hormona del estrés</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Mejora del sueño:</strong> Reduce insomnio y ansiedad</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>Función pulmonar:</strong> Mejora la capacidad pulmonar</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="exercise-controls">
+                        <button class="btn btn-success" id="startBreathing">Iniciar Sesión</button>
+                        <button class="btn btn-secondary" id="stopBreathing">Detener</button>
+                    </div>
+                    <div id="stressResults" class="results" style="display: none;"></div>
+                </div>
+            `;
+        }
+
+        // Initialize 4-7-8 Breathing Exercise
+        function initStressExercise() {
+            let breathingActive = false;
+            let currentCycle = 0;
+            let totalCycles = 0;
+            let phase = 'ready'; // ready, inhale, hold, exhale
+            let count = 0;
+            let phaseTimer;
+            let startTime;
+
+            const circle = document.getElementById('breathingCircle');
+            const circleText = document.getElementById('circleText');
+            const instructions = document.getElementById('instructions');
+            const countDisplay = document.getElementById('count');
+            const cycleDisplay = document.getElementById('cycle');
+            const startBtn = document.getElementById('startBreathing');
+            const stopBtn = document.getElementById('stopBreathing');
+            const resultsDiv = document.getElementById('stressResults');
+
+            function updateCircle(text, className) {
+                circleText.textContent = text;
+                circle.className = `breathing-circle ${className}`;
+            }
+
+            function startBreathingCycle() {
+                if (breathingActive) return;
+                
+                breathingActive = true;
+                currentCycle = 0;
+                startTime = Date.now();
+                
+                function nextPhase() {
+                    if (!breathingActive) return;
+                    
+                    if (phase === 'ready') {
+                        phase = 'inhale';
+                        count = 4;
+                        updateCircle('Inhala', 'inhale');
+                        instructions.textContent = 'Inhala profundamente por la nariz (4 segundos)';
+                        countDisplay.textContent = count;
+                        
+                        phaseTimer = setInterval(() => {
+                            count--;
+                            countDisplay.textContent = count;
+                            if (count <= 0) {
+                                clearInterval(phaseTimer);
+                                phase = 'hold';
+                                count = 7;
+                                updateCircle('Mantén', 'hold');
+                                instructions.textContent = 'Mantén el aire (7 segundos) - Activa el nervio vago';
+                                countDisplay.textContent = count;
+                                
+                                phaseTimer = setInterval(() => {
+                                    count--;
+                                    countDisplay.textContent = count;
+                                    if (count <= 0) {
+                                        clearInterval(phaseTimer);
+                                        phase = 'exhale';
+                                        count = 8;
+                                        updateCircle('Exhala', 'exhale');
+                                        instructions.textContent = 'Exhala lentamente (8 segundos) - Activa sistema parasimpático';
+                                        countDisplay.textContent = count;
+                                        
+                                        phaseTimer = setInterval(() => {
+                                            count--;
+                                            countDisplay.textContent = count;
+                                            if (count <= 0) {
+                                                clearInterval(phaseTimer);
+                                                currentCycle++;
+                                                cycleDisplay.textContent = `Ciclo: ${currentCycle}/4`;
+                                                
+                                                if (currentCycle < 4) {
+                                                    setTimeout(() => {
+                                                        phase = 'inhale';
+                                                        nextPhase();
+                                                    }, 1000);
+                                                } else {
+                                                    endSession();
+                                                }
+                                            }
+                                        }, 1000);
+                                    }
+                                }, 1000);
+                            }
+                        }, 1000);
+                    }
+                }
+                
+                nextPhase();
+            }
+
+            function endSession() {
+                breathingActive = false;
+                const sessionTime = Math.round((Date.now() - startTime) / 1000);
+                totalCycles++;
+                
+                updateCircle('Completado', '');
+                instructions.textContent = 'Sesión de respiración 4-7-8 completada';
+                countDisplay.textContent = '✓';
+                
+                resultsDiv.innerHTML = `
+                    <h3>¡Sesión Completada! 🧘‍♂️</h3>
+                    <div class="score-display">+${totalCycles * 10} XP</div>
+                    <p><strong>Tiempo total:</strong> ${sessionTime} segundos</p>
+                    <p><strong>Ciclos completados:</strong> ${currentCycle}</p>
+                    <p><strong>Beneficios activados:</strong></p>
+                    <ul style="text-align: left; margin-top: 1rem;">
+                        <li>✓ Activación del sistema nervioso parasimpático</li>
+                        <li>✓ Estimulación del nervio vago</li>
+                        <li>✓ Reducción de cortisol (hormona del estrés)</li>
+                        <li>✓ Mejora de la variabilidad de frecuencia cardíaca</li>
+                        <li>✓ Disminución de presión arterial</li>
+                        <li>✓ Mejora de la calidad del sueño</li>
+                    </ul>
+                    <div style="margin-top: 2rem; padding: 1rem; background: var(--white); border-radius: 10px;">
+                        <h4>Próximos pasos recomendados:</h4>
+                        <p>Practica esta técnica 2 veces al día (mañana y noche) durante al menos 6 semanas para obtener beneficios clínicos medibles.</p>
+                    </div>
+                `;
+                resultsDiv.style.display = 'block';
+                
+                startBtn.style.display = 'inline-block';
+                startBtn.textContent = 'Nueva Sesión';
+            }
+
+            startBtn.onclick = function() {
+                startBreathingCycle();
+                startBtn.style.display = 'none';
+                resultsDiv.style.display = 'none';
+            };
+
+            stopBtn.onclick = function() {
+                breathingActive = false;
+                clearInterval(phaseTimer);
+                updateCircle('Respiración', '');
+                instructions.textContent = 'Sesión detenida';
+                countDisplay.textContent = '--';
+                cycleDisplay.textContent = 'Ciclo: 0/4';
+                startBtn.style.display = 'inline-block';
+                startBtn.textContent = 'Iniciar Sesión';
+                resultsDiv.style.display = 'none';
+            };
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(44, 62, 80, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
